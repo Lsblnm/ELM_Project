@@ -1,0 +1,34 @@
+.footer {
+	width: 100%;
+	height: 14vw;
+	border-top: solid 1px #DDD;
+	background-color: #fff;
+
+	position: fixed;
+	left: 0;
+	bottom: 0;
+
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.footer li {
+	/*li本身的尺寸完全由内容撑起*/
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	color: #999;
+	user-select: none;
+	cursor: pointer;
+}
+
+.footer li p {
+	font-size: 2.8vw;
+}
+
+.footer li i {
+	font-size: 5vw;
+}
