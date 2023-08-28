@@ -10,12 +10,12 @@ public class Business {
 	private double deliveryPrice;
 	
 	public String toString() {
-		return "\nÉÌ¼Ò±àºÅ£º"+this.businessId+
-			   "\nÉÌ¼ÒÃû³Æ£º"+this.businessName+
-			   "\nÉÌ¼ÒµØÖ·£º"+this.businessAddress+
-			   "\nÉÌ¼Ò½éÉÜ£º"+this.businessExplain+
-			   "\nÆğËÍ·Ñ£º"+this.starPrice+
-			   "\nÅäËÍ·Ñ£º"+this.deliveryPrice;
+		return "\nå•†å®¶ç¼–å·ï¼š"+this.businessId+
+			   "\nå•†å®¶åç§°ï¼š"+this.businessName+
+			   "\nå•†å®¶åœ°å€ï¼š"+this.businessAddress+
+			   "\nå•†å®¶ä»‹ç»ï¼š"+this.businessExplain+
+			   "\nèµ·é€è´¹ï¼š"+this.starPrice+
+			   "\né…é€è´¹ï¼š"+this.deliveryPrice;
 		
 	}
 	public int getBusinessId() {

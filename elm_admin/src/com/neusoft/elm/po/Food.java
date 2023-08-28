@@ -7,11 +7,11 @@ public class Food {
 	private double foodPrice;
 	private int bussinessId;
 	public String toString() {
-		return "\nʳƷ��ţ�"+this.foodId+
-			   "\nʳƷ���ƣ�"+this.foodName+
-			   "\nʳƷ���ܣ�"+this.foodExplain+
-			   "\nʳƷ�۸�"+this.foodPrice+
-			   "\n�����̼ң�"+this.bussinessId;
+		return "\n食品编号："+this.foodId+
+			   "\n食品名称："+this.foodName+
+			   "\n食品介绍："+this.foodExplain+
+			   "\n食品价格："+this.foodPrice+
+			   "\n所属商家："+this.bussinessId;
 		
 	}
 	public int getFoodId() {
@@ -38,10 +38,10 @@ public class Food {
 	public void setFoodPrice(double foodPrice) {
 		this.foodPrice = foodPrice;
 	}
-	public int getBussinessId() {
+	public int getBusinessId() {
 		return bussinessId;
 	}
-	public void setBussinessId(int bussinessId) {
+	public void setBusinessId(int bussinessId) {
 		this.bussinessId = bussinessId;
 	}
 	

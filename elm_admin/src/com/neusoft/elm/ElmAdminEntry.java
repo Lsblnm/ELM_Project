@@ -12,18 +12,18 @@ public class ElmAdminEntry {
 	public void work() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("-------------------------------------------------");
-		System.out.println("|\t\t ¶öÁËÃ´ºóÌ¨¹ÜÀíÏµÍ³ \t\t|");
+		System.out.println("|\t\t é¥¿äº†ä¹ˆåå°ç®¡ç†ç³»ç»Ÿ \t\t|");
 		System.out.println("-------------------------------------------------");
-		// µÇÂ¼
+		// ç™»å½•
 		AdminView adminView = new AdminViewImpl();
 		BusinessView businessView = new BusinessViewImpl();
 		Admin admin = adminView.login();
 		if (admin != null) {
 			int menu = 0;
-			// Êä³öÖ÷²Ëµ¥
+			// è¾“å‡ºä¸»èœå•
 			while (menu != 5) {
-				System.out.println("\n======1.ËùÓĞÉÌ¼ÒÁĞ±í=2.ËÑË÷ÉÌ¼Ò=3.ĞÂ½¨ÉÌ¼Ò=4.É¾³ıÉÌ¼Ò=5.ÍË³öÏµÍ³======");
-				System.out.println("ÇëÊäÈëÄãµÄÑ¡Ôñ£º");
+				System.out.println("\n======1.æ‰€æœ‰å•†å®¶åˆ—è¡¨=2.æœç´¢å•†å®¶=3.æ–°å»ºå•†å®¶=4.åˆ é™¤å•†å®¶=5.é€€å‡ºç³»ç»Ÿ======");
+				System.out.println("è¯·è¾“å…¥ä½ çš„é€‰æ‹©ï¼š");
 				menu = input.nextInt();
 				switch (menu) {
 				case 1:
@@ -39,17 +39,17 @@ public class ElmAdminEntry {
 					businessView.removeBusiness();
 					break;
 				case 5:
-					System.out.println("----------»¶Ó­ÏÂ´Î¹âÁÙ¶öÁËÃ´ÉÌ¼ÒºóÌ¨¹ÜÀíÏµÍ³----------");
+					System.out.println("----------æ¬¢è¿ä¸‹æ¬¡å…‰ä¸´é¥¿äº†ä¹ˆå•†å®¶åå°ç®¡ç†ç³»ç»Ÿ----------");
 					break;
 				default:
-					System.out.println("Ã»ÓĞÕâ¸öÑ¡Ïî\n");
+					System.out.println("æ²¡æœ‰è¿™ä¸ªé€‰é¡¹\n");
 
 				}
 			}
 		}
 
 		else {
-			System.out.println("\n¹ÜÀíÔ±Ãû³Æ»òÃÜÂëÊäÈë´íÎó\n");
+			System.out.println("\nç®¡ç†å‘˜åç§°æˆ–å¯†ç è¾“å…¥é”™è¯¯\n");
 		}
 	}
 

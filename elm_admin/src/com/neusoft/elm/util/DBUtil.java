@@ -2,32 +2,34 @@ package com.neusoft.elm.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 
 public class DBUtil {
-	private static final String URL = "jdbc:mysql://localhost:3306/elm_admin?serverTimezone=GMT%2B8&characterEncoding=utf-8";
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "123456";
 
-	// ��ȡconnection
+	private static final String URL = "jdbc:mysql://localhost:3306/elm_admin?characterEncoding=utf-8";//放数据库连接字符串
+	private static final String DRIVER = "com.mysql.jdbc.Driver";//驱动类路径
+	private static final String USENAME = "root"; 
+	private static final String PASSWORD = "7758258Xdd";//待定
+	
+	//获取Connection
 	public static Connection getConnection() {
 		Connection con = null;
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			Class.forName(DRIVER);//给予驱动类路径就可以加载sql驱动了
+			con = DriverManager.getConnection(URL,USENAME,PASSWORD);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return con;
 	}
-
-	// �ر���Դ
+	
+	//关闭资源
 	public static void close(ResultSet rs, PreparedStatement pst, Connection con) {
-		if (rs != null) {
+		//避免空指针异常
+		if(rs!=null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
@@ -36,7 +38,7 @@ public class DBUtil {
 			}
 			rs = null;
 		}
-		if (pst != null) {
+		if(pst!=null) {
 			try {
 				pst.close();
 			} catch (SQLException e) {
@@ -45,7 +47,7 @@ public class DBUtil {
 			}
 			pst = null;
 		}
-		if (con != null) {
+		if(con!=null) {
 			try {
 				con.close();
 			} catch (SQLException e) {
@@ -55,5 +57,4 @@ public class DBUtil {
 			con = null;
 		}
 	}
-
 }
