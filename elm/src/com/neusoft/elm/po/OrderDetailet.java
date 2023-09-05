@@ -1,13 +1,14 @@
 package com.neusoft.elm.po;
 
 public class OrderDetailet {
-	private Integer odId;
-	private Integer orderId;
-	private Integer foodId;
-	private Integer quantity;
+	
+	 private Integer odId;
+	 private Integer orderId;
+	 private Integer foodId;
+	 private Integer quantity;
 
-	// 多对一：所属食品
-	private Food food;
+	 //多对一：所属食品
+	 private Food food;
 
 	public Integer getOdId() {
 		return odId;
@@ -49,4 +50,6 @@ public class OrderDetailet {
 		this.food = food;
 	}
 
+	 
+	
 }

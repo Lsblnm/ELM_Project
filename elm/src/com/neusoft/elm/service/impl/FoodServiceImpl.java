@@ -2,6 +2,7 @@ package com.neusoft.elm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.neusoft.elm.dao.BusinessDao;
 import com.neusoft.elm.dao.FoodDao;
 import com.neusoft.elm.dao.impl.BusinessDaoImpl;
@@ -11,7 +12,8 @@ import com.neusoft.elm.po.Food;
 import com.neusoft.elm.service.FoodService;
 import com.neusoft.elm.util.DBUtil;
 
-public class FoodServiceImpl implements FoodService {
+public class FoodServiceImpl implements FoodService{
+
 	@Override
 	public List<Food> listFoodByBusinessId(Integer businessId) {
 		List<Food> list = new ArrayList<>();
@@ -26,4 +28,5 @@ public class FoodServiceImpl implements FoodService {
 		}
 		return list;
 	}
+	
 }

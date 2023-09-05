@@ -1,30 +1,33 @@
 package com.neusoft.elm.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.neusoft.elm.dao.BusinessDao;
 import com.neusoft.elm.po.Business;
 import com.neusoft.elm.util.DBUtil;
 
-public class BusinessDaoImpl implements BusinessDao {
+public class BusinessDaoImpl implements BusinessDao{
+	
 	private Connection con = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
-
+	
+	//不catch因为要抛给service层
 	@Override
 	public List<Business> listBusinessByOrderTypeId(Integer orderTypeId) throws Exception {
-		List<Business> list = new ArrayList<>();
+		List<Business> list = new ArrayList();
 		String sql = "select * from business where orderTypeId=? order by businessId";
 		try {
 			con = DBUtil.getConnection();
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, orderTypeId);
 			rs = pst.executeQuery();
-			while (rs.next()) {
+			while(rs.next()) {
+				//两层转换：把数据库里的数据转为java对象里的数据，再转为json数据
 				Business business = new Business();
 				business.setBusinessId(rs.getInt("businessId"));
 				business.setBusinessName(rs.getString("businessName"));
@@ -38,12 +41,13 @@ public class BusinessDaoImpl implements BusinessDao {
 				list.add(business);
 			}
 		} finally {
-			DBUtil.close(rs, pst);
+			DBUtil.close(rs,pst);
 		}
+		
 		return list;
-
 	}
-
+	
+	@Override
 	public Business getBusinessById(Integer businessId) throws Exception {
 		Business business = null;
 		String sql = "select * from business where businessId=?";
@@ -52,7 +56,8 @@ public class BusinessDaoImpl implements BusinessDao {
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, businessId);
 			rs = pst.executeQuery();
-			while (rs.next()) {
+			while(rs.next()) {
+				//两层转换：把数据库里的数据转为java对象里的数据，再转为json数据
 				business = new Business();
 				business.setBusinessId(rs.getInt("businessId"));
 				business.setBusinessName(rs.getString("businessName"));
@@ -65,9 +70,9 @@ public class BusinessDaoImpl implements BusinessDao {
 				business.setRemarks(rs.getString("remarks"));
 			}
 		} finally {
-			DBUtil.close(rs, pst);
+			DBUtil.close(rs,pst);
 		}
 		return business;
 	}
-
+	
 }

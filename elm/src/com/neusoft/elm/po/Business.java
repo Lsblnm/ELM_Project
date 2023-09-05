@@ -1,7 +1,7 @@
 package com.neusoft.elm.po;
 
 public class Business {
-	private Integer businessId;
+	 private Integer businessId;
 	 private String businessName;
 	 private String businessAddress;
 	 private String businessExplain;
@@ -10,9 +10,12 @@ public class Business {
 	 private double starPrice; //ÆğËÍ·Ñ
 	 private double deliveryPrice; //ÅäËÍ·Ñ
 	 private String remarks;
+
+	
 	public Integer getBusinessId() {
 		return businessId;
 	}
+	
 	public void setBusinessId(Integer businessId) {
 		this.businessId = businessId;
 	}
@@ -64,7 +67,7 @@ public class Business {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
-	 
-
+	
+	
+	
 }
