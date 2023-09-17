@@ -4,24 +4,23 @@
 		<header>
 			<p>商家信息</p>
 		</header>
-		<!-- 商家logo部分，更改动态数据，从数据库中获取 -->
+		<!-- 商家logo部分 -->
 		<div class="business-logo">
-			<img :src="business.businessImg"><!-- img为动态数据，需要从数据库中获取，src需要绑定:src，businessImg为数据库商家图片的类名-->
+			<img :src="business.businessImg">
 		</div>
 		<!-- 商家信息部分 -->
 		<div class="business-info">
-			<h1>{{business.businessName}}</h1><!-- business为服务器传入的商家信息，businessName为数据库商家名称的类名 -->
+			<h1>{{business.businessName}}</h1>
 			<p>&#165;{{business.starPrice}}起送 &#165;{{business.deliveryPrice}}配送</p>
-			<p>{{business.businessExplain}}</p><!-- 商家信息简介部分 -->
+			<p>{{business.businessExplain}}</p>
 		</div>
-		<!--评论部分-->
 		<div class="remark" @click="toRemark">
 			<button>评论</button>
 		</div>
+
 		<!-- 食品列表部分 -->
 		<ul class="food">
 			<li v-for="(item,index) in foodArr">
-				<!-- index为每个食品对象的索引，方便计数 -->
 				<div class="food-left">
 					<img :src="item.foodImg">
 					<div class="food-left-info">
@@ -32,14 +31,10 @@
 				</div>
 				<div class="food-right">
 					<div>
-						<!-- 减号区域 -->
-						<!--@click点击减少一个索引；v-show判断数量等于0，减号则不显示-->
 						<i class="fa fa-minus-circle" @click="minus(index)" v-show="item.quantity!=0"></i>
 					</div>
-					<!-- 显示数量 -->
 					<p><span v-show="item.quantity!=0">{{item.quantity}}</span></p>
 					<div>
-						<!--@click点击增加一个索引；加号无条件显示-->
 						<i class="fa fa-plus-circle" @click="add(index)"></i>
 					</div>
 				</div>
@@ -48,8 +43,8 @@
 		<!-- 购物车部分 -->
 		<div class="cart">
 			<div class="cart-left">
-				<div class="cart-left-icon" :style="totalQuantity==0?'background-color:#505051;':'background-color:#3190E8;'">
-					<!-- style行内样式，动态，需要绑定加：，绑定后才可应用vue数据 -->
+				<div class="cart-left-icon"
+					:style="totalQuantity==0?'background-color:#505051;':'background-color:#3190E8;'">
 					<i class="fa fa-shopping-cart"></i>
 					<div class="cart-left-icon-quantity" v-show="totalQuantity!=0">
 						{{totalQuantity}}
@@ -62,7 +57,8 @@
 			</div>
 			<div class="cart-right">
 				<!-- 不够起送费 -->
-				<div class="cart-right-item" v-show="totalSettle<business.starPrice" style="background-color: #535356;cursor: default;">
+				<div class="cart-right-item" v-show="totalSettle<business.starPrice"
+					style="background-color: #535356;cursor: default;">
 					&#165;{{business.starPrice}}起送
 				</div>
 				<!-- 达到起送费 -->
@@ -76,63 +72,58 @@
 <script>
 	export default {
 		name: 'BusinessInfo',
-		data() { //接收到的动态数据
+		data() {
 			return {
-				businessId: this.$route.query.businessId, //商家信息Id，通过路由获得
-				business: {}, //Id得到的商家对象，初始值为空
-				foodArr: [], //食品信息
-				user: {} //登录对象
+				businessId: this.$route.query.businessId,
+				business: {},
+				foodArr: [],
+				user: {}
 			}
 		},
-		created() { //初始函数
-			//从session中获取user
+		created() {
 			this.user = this.$getSessionStorage('user');
-
 			//根据businessId查询商家信息
-			//服务器端获取商家信息，执行完成后，business被赋值
 			this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
 				businessId: this.businessId
 			})).then(response => {
-				this.business = response.data; //business被赋值
+				this.business = response.data;
 			}).catch(error => {
 				console.error(error);
 			});
-
-			//根据businessId查询所属食品信息，如果已登录，需要保存之前购物车信息（在查询所属食品信息处获取之前购物车信息）
+			//根据businessId查询所属食品信息
 			this.$axios.post('FoodController/listFoodByBusinessId', this.$qs.stringify({
 				businessId: this.businessId
 			})).then(response => {
 				this.foodArr = response.data;
 				for (let i = 0; i < this.foodArr.length; i++) {
-					this.foodArr[i].quantity = 0; //给每个食品添加一个数量属性quantity
+					this.foodArr[i].quantity = 0;
 				}
+
 				//如果已登录，那么需要去查询购物车中是否已经选购了某个食品
 				if (this.user != null) {
-					this.listCart(); //查询购物车中是否已经选购了某个食品
+					this.listCart();
 				}
 			}).catch(error => {
 				console.error(error);
 			});
 		},
 		methods: {
-			//保存购物车信息函数，保证登录后食品列表数量仍然存在
 			listCart() {
 				this.$axios.post('CartController/listCart', this.$qs.stringify({
 					businessId: this.businessId,
 					userId: this.user.userId
 				})).then(response => {
-					//购物车列表cartArr，包含所有购物车内食品的信息
 					let cartArr = response.data;
-					//遍历所有食品列表foodArr，包含所有食品的信息
-					for (let foodItem of this.foodArr) { //遍历所有的食品列表
+					//遍历所有食品列表
+					for (let foodItem of this.foodArr) {
 						foodItem.quantity = 0;
-						for (let cartItem of cartArr) { //到购物车中去找
-							if (cartItem.foodId == foodItem.foodId) { //如果购物车内的某个食品存在于食品列表中，重新设置食品列表遍历对象的数量为购物车内食品的数量
+						for (let cartItem of cartArr) {
+							if (cartItem.foodId == foodItem.foodId) {
 								foodItem.quantity = cartItem.quantity;
 							}
 						}
 					}
-					this.foodArr.sort(); //确保vue得到数量变化
+					this.foodArr.sort();
 				}).catch(error => {
 					console.error(error);
 				});
@@ -146,18 +137,18 @@
 				});
 			},
 			add(index) {
-				//点击加号时，首先做登录验证
+				//首先做登录验证
 				if (this.user == null) {
-					this.$router.push({ //路由
+					this.$router.push({
 						path: '/login'
 					});
 					return;
 				}
 				if (this.foodArr[index].quantity == 0) {
-					//做insert，视图层插入减号与1
+					//做insert
 					this.savaCart(index);
 				} else {
-					//做update，数量加1
+					//做update
 					this.updateCart(index, 1);
 				}
 			},
@@ -173,11 +164,10 @@
 					//做update
 					this.updateCart(index, -1);
 				} else {
-					//做delete，视图层去掉减号与1
+					//做delete
 					this.removeCart(index);
 				}
 			},
-			//insert操作
 			savaCart(index) {
 				this.$axios.post('CartController/saveCart', this.$qs.stringify({
 					businessId: this.businessId,
@@ -186,9 +176,7 @@
 				})).then(response => {
 					if (response.data == 1) {
 						//此食品数量要更新为1；
-						//令quantity = 1，减号和1通过html部分的v-show显示
 						this.foodArr[index].quantity = 1;
-						//通过排序让vue监听到数组的变化，进而通过v-show引起视图层的改变
 						this.foodArr.sort();
 					} else {
 						alert('向购物车中添加食品失败！');
@@ -205,7 +193,7 @@
 					quantity: this.foodArr[index].quantity + num
 				})).then(response => {
 					if (response.data == 1) {
-						//此食品数量要更新为+1或-1；
+						//此食品数量要更新为1或-1；
 						this.foodArr[index].quantity += num;
 						this.foodArr.sort();
 					} else {
@@ -241,14 +229,14 @@
 				});
 			}
 		},
-		computed: { //计算属性
+		computed: {
 			//食品总价格
 			totalPrice() {
 				let total = 0;
 				for (let item of this.foodArr) {
 					total += item.foodPrice * item.quantity;
 				}
-				return total.toFixed(2);
+				return total;
 			},
 			//食品总数量
 			totalQuantity() {
@@ -261,8 +249,9 @@
 			//结算总价格
 			totalSettle() {
 				return this.totalPrice + this.business.deliveryPrice;
-			}
-		}
+			
+	}	
+	}
 	}
 </script>
 <style scoped>
