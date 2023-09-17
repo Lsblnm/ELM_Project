@@ -41,7 +41,7 @@ import io.github.jonathanlink.PDFLayoutTextStripper;
 @RequestMapping("/chatgpt")
 public class ChatgptController {
     /*private static final String SAMPLE_PDF_FILE = "中国城镇居民的房地产税纳税意愿——基于不同减免方案的模拟分析_张平.pdf";*/
-    private static final String OPENAI_API_KEY = "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";
+    private static final String OPENAI_API_KEY = "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";
     //注意：这里要换成你自己的OPENAI的代理地址
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
